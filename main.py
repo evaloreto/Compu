@@ -24,9 +24,23 @@ def result():
             hora_busqueda = time.strftime("%H:%M:%S")
             fecha_busqueda = time.strftime("%x")
 
+            # Por defecto la base de datos de mongo usa el puerto 27017
+            client = MongoClient()
+            # Asignamos la base de datos a una variable BD: numeros
+            db = client.numeros
+            # Dentro de una BD, guardamos colecciones de archivos (que son los que contienen toda la informacion de un
+            # numero. Usaremos una coleccion que se llame aleatorios
+            db.aleatorios.insert_one(
+                {
+                    "valor": num,
+                    "fecha": fecha_busqueda,
+                    "hora": hora_busqueda
+                }
+            )
 
-            print(num)
-            print(hora_busqueda)
-            print(fecha_busqueda)
+            query = db.aleatorios.find()
+            for document in query:
+                print document
+
             return num
 

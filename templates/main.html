@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<p style="text-align: center;">&nbsp;</p>
+<p>&nbsp;</p>
+<table style="margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align: center;" colspan="3">
+<h2>N&uacute;meros aleatorios</h2>
+</td>
+</tr>
+<tr>
+	<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="3"><form action="http://localhost:5000/results"><input class="btn btn-success" type="submit" value="Obtener n&uacute;meros aleatorios" /></form></td>
+</tr>
+<tr>
+	<td colspan="3">&nbsp;</td>
+</tr>
+<form action="http://localhost:5000/results" method="post">
+<tr>
+<td>Umbral&nbsp;</td>
+<td>
+<input class="form-control" type="number" name="umbral"/>
+</td>
+<td rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-info" type="submit" value="Filtrar" /></td>
+</tr>	
+<tr>
+	<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+	<td>Valor medio&nbsp;</td>
+	<td align="center">&nbsp;<input type="checkbox" name="valormedio">&nbsp;</td>
+</tr>
+</form>
+</tr>
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+<td style="text-align: center;" colspan="3"><form action="http://localhost:5000/borrar"><input type="submit" class="btn btn-danger" value="Borrar entradas BBDD"></form></td>
+</tr>
+</tbody>
+</table>
+</body>

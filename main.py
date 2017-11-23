@@ -39,8 +39,10 @@ def result():
             )
 
             query = db.aleatorios.find()
-            for document in query:
-                print document
+            #for document in query:
+            #    print document['valor']
+            #    print document['hora']
+            #    print document['fecha']
 
-            return num
+            return render_template('results.html', query=query)
 

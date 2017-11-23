@@ -60,5 +60,14 @@
 		<th>Hora</th>
 	</tr>
 	</thead>
+	<tbody>
+		{% for value in query %}
+			<tr>
+				<td> {{ value['valor'] }} </td>
+				<td> {{ value['fecha'] }} </td>
+				<td> {{ value['hora'] }} </td>
+			</tr>
+		{% endfor %}
+	</tbody>
 </table>
 </body>

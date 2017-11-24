@@ -3,6 +3,7 @@ import re
 import time
 import requests
 from pymongo import MongoClient
+import locale
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ def main():
 
 @app.route('/result', methods=['GET', 'POST'])
 def result():
+    locale.setlocale(locale.LC_TIME, 'es_ES')
     web_num_aleatorio = requests.get('http://www.numeroalazar.com.ar/')
     if web_num_aleatorio.status_code == 200:
         r = re.compile(r'..meros\sgenerados</h2>.(.*?)<br>', re.DOTALL)

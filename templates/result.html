@@ -67,6 +67,11 @@
 			<tr>
 				<th style="text-align: center;"> Valor medio = &nbsp;</th>
 				<td style="text-align: center;"> {{ valormedio }} </td>
+				{% if bbdd == true %}
+					<th style="text-align: center;"> &nbsp; &nbsp;BBDD externa </th>
+				{% else %}
+					<th style="text-align: center;"> &nbsp; &nbsp;BBDD interna </th>
+				{% endif %}
 			</tr>
 			<tr></tr>
 		</table>

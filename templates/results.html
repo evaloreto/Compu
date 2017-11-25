@@ -54,6 +54,9 @@
 
 <table class="table table-striped">
 	<thead>
+		{% if valormedio != -1 %}
+			<tr colspan="3" align="center"> Valor medio = {{ valormedio }}</tr>
+		{% endif %}
 	<tr>
 		<th>Valor</th>
 		<th>Fecha</th>

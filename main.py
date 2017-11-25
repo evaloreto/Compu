@@ -43,18 +43,39 @@ def result():
             if request.method == "GET":
                 query = db.aleatorios.find()
             elif request.method == "POST":
-                valormedio = request.form.get('valormedio', default=False, type=bool)
+                valormedio = -1
+                calc_valormedio = request.form.get('valormedio', default=False, type=bool)
                 umbral = request.form.get('umbral', default=-1, type=int)
                 if umbral == -1:
-                    query = db.aleatorios.find()
+                    if calc_valormedio:
+                        query = list(db.aleatorios.find())
+                        total_valores = 0
+                        valormedio = 0.0
+                        for document in query:
+                            valormedio = valormedio + float(document['valor'])
+                            total_valores = total_valores + 1
+
+                        valormedio = valormedio / total_valores
+                    else:
+                        query = db.aleatorios.find()
                 else:
-                    query = db.aleatorios.find({'valor': {'$gt': umbral}})
+                    if calc_valormedio:
+                        query = list(db.aleatorios.find({'valor': {'$gt': umbral}}))
+                        total_valores = 0
+                        valormedio = 0.0
+                        for document in query:
+                            valormedio = valormedio + float(document['valor'])
+                            total_valores = total_valores + 1
+
+                        valormedio = valormedio / total_valores
+                    else:
+                        query = db.aleatorios.find({'valor': {'$gt': umbral}})
                     #for document in query:
                     #    print document['valor']
 
             #for document in query:
-            #    print document['valor']
+            #   print document['valor']
             #    print document['hora']
             #    print document['fecha']
 
-        return render_template('results.html', query=query)
+        return render_template('results.html', query=query, valormedio=valormedio)

@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import re
+from beebotte import *
 import time
 import requests
 from pymongo import MongoClient
 import locale
+
 
 app = Flask(__name__)
 
@@ -40,6 +42,16 @@ def result():
                 }
             )
 
+            # Escribimos tambien en la BBDD externa
+            _accesskey = 'e64705459c40abbfe3e8c0b09cb14acf'
+            _secretkey = '42199826e66579c6c62b56f4231a9126ed832364113b83d02731d0b2f75fc01f'
+            _hostname = 'api.beebotte.com'
+            bbt = BBT(_accesskey, _secretkey, hostname=_hostname)
+
+            bbt.write("numeros", "valor", num)
+            bbt.write("numeros", "fecha", fecha_busqueda)
+            bbt.write("numeros", "hora", hora_busqueda)
+
             # Inicializamos valormedio, para que no de error en caso de que no se use
             valormedio = -1.0
 
@@ -74,6 +86,9 @@ def result():
                         query = db.aleatorios.find({'valor': {'$gt': umbral}})
 
         return render_template('result.html', query=query, valormedio=valormedio)
+    
 
-#@app.route('/borrar', methods=['GET'])
-#def borrar():
+@app.route('/graficas_externas', methods=['GET'])
+def graficas_externas():
+    return redirect("https://beebotte.com/dash/d2c310e0-d208-11e7-bfef-6f68fef5ca14", code=302)
+

@@ -18,7 +18,7 @@
 </td>
 </tr>
 <tr>
-	<td colspan="3">&nbsp;</td>
+	<td colspan="4">&nbsp;</td>
 </tr>
 <tr>
 <td style="text-align: center;" colspan="3"><form action="http://localhost:5000/result"><input class="btn btn-success" type="submit" value="Obtener n&uacute;meros aleatorios" /></form></td>
@@ -32,7 +32,25 @@
 <td>
 <input class="form-control" type="number" name="umbral"/>
 </td>
-<td rowspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input class="btn btn-info" type="submit" value="Filtrar" /></td>
+<td rowspan="3" style="padding-left: 10px;">
+	<select name="tipo_umbral" class="form-control">    
+       <option value="0" selected="selected">> umbral</option>
+       <option value="1">< umbral</option>
+       <option value="2">umbral aux < x < umbral</option>
+   </select>
+</td>
+
+<tr>
+<td colspan="3">&nbsp;</td>
+</tr>
+
+<tr>
+<td>Umbral aux&nbsp;</td>
+<td>
+<input class="form-control" type="number" name="umbral_aux"/>
+</td>
+</tr>
+
 </tr>	
 <tr>
 	<td colspan="3">&nbsp;</td>
@@ -40,6 +58,7 @@
 <tr>
 	<td>Valor medio&nbsp;</td>
 	<td align="center">&nbsp;<input type="checkbox" name="valormedio">&nbsp;</td>
+	<td><input class="btn btn-info" type="submit" value="Filtrar" style="margin-left: 70px;"/></td>
 </tr>
 </form>
 </tr>

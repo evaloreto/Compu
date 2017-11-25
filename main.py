@@ -64,8 +64,10 @@ def result():
                 query = db.aleatorios.find()
     elif request.method == "POST":
         calc_valormedio = request.form.get('valormedio', default=False, type=bool)
-        print calc_valormedio
         umbral = request.form.get('umbral', default=-1, type=int)
+        umbral_aux = request.form.get('umbral_aux', default=-1, type=int)
+        tipo_umbral = request.form.get('tipo_umbral', default=-1, type=int)
+        print tipo_umbral
         if umbral == -1:
             query = list(db.aleatorios.find())
             if calc_valormedio:
@@ -86,7 +88,14 @@ def result():
             else:
                 query = db.aleatorios.find()
         else:
-            query = list(db.aleatorios.find({'valor': {'$gt': umbral}}))
+            if tipo_umbral == 0:
+                query = list(db.aleatorios.find({'valor': {'$gt': umbral}}))
+            elif tipo_umbral == 1:
+                query = list(db.aleatorios.find({'valor': {'$lt': umbral}}))
+            elif tipo_umbral == 2:
+                query = list(db.aleatorios.find({'valor': {'$lt': umbral, '$gt': umbral_aux}}))
+                for document in query:
+                    print document['valor']
             if calc_valormedio:
                 total_valores = 0
                 valormedio = 0.0
@@ -97,14 +106,21 @@ def result():
                 else:
                     query_externa = bbt.read("numeros", "valor", limit=50000)
                     for valor in query_externa:
-                        if valor['data'] > umbral:
-                            valormedio = valormedio + valor['data']
-                            total_valores = total_valores + 1
+                        if tipo_umbral == 0:
+                            if valor['data'] > umbral:
+                                valormedio = valormedio + valor['data']
+                                total_valores = total_valores + 1
+                        elif tipo_umbral == 1:
+                            if valor['data'] < umbral:
+                                valormedio = valormedio + valor['data']
+                                total_valores = total_valores + 1
+                        elif tipo_umbral == 2:
+                            if (valor['data'] < umbral) and (valor['data'] > umbral_aux):
+                                valormedio = valormedio + valor['data']
+                                total_valores = total_valores + 1
 
                 valormedio = valormedio / total_valores
                 leer_bbdd_interna = not leer_bbdd_interna
-            else:
-                query = db.aleatorios.find({'valor': {'$gt': umbral}})
 
     return render_template('result.html', query=query, valormedio=valormedio, bbdd=leer_bbdd_interna)
 

@@ -10,6 +10,7 @@ import locale
 app = Flask(__name__)
 
 leer_bbdd_interna = True
+umbral_actual = -1
 
 @app.route('/')
 def main():
@@ -129,3 +130,60 @@ def result():
 def graficas_externas():
     return redirect("https://beebotte.com/dash/d2c310e0-d208-11e7-bfef-6f68fef5ca14", code=302)
 
+
+@app.route('/umbral_actual', methods=['GET', 'POST'])
+def umbral_actual():
+    global umbral_actual
+
+    locale.setlocale(locale.LC_TIME, 'es_ES')
+
+    # Conexion con BBDD interna
+    # Por defecto la base de datos de mongo usa el puerto 27017
+    client = MongoClient()
+    # Asignamos la base de datos a una variable BD: numeros
+    db = client.numeros
+
+    # Conexion con BBDD externa
+    _accesskey = 'e64705459c40abbfe3e8c0b09cb14acf'
+    _secretkey = '42199826e66579c6c62b56f4231a9126ed832364113b83d02731d0b2f75fc01f'
+    _hostname = 'api.beebotte.com'
+    bbt = BBT(_accesskey, _secretkey, hostname=_hostname)
+
+    # Si es POST, actualizamos el umbral_actual
+    if request.method == "POST":
+        umbral_actual = request.form.get('umbral_actual', default=-1, type=int)
+
+    # Cada vez que se recarga la pagina o entramos, se coge un dato y se guarda en las BBDD. Si supera el umbral
+    # se sale
+    web_num_aleatorio = requests.get('http://www.numeroalazar.com.ar/')
+    if web_num_aleatorio.status_code == 200:
+        r = re.compile(r'..meros\sgenerados</h2>.(.*?)<br>', re.DOTALL)
+        m = r.search(web_num_aleatorio.text)
+        if m:
+            num_busqueda = re.search("\d+(?:\.\d+)?", m.group(1))
+            num = float(num_busqueda.group())
+            hora_busqueda = time.strftime("%H:%M:%S")
+            fecha_busqueda = time.strftime("%x")
+
+            # Dentro de la BBDD interna, guardamos colecciones de archivos (que son los que contienen toda la informacion de un
+            # numero. Usaremos una coleccion que se llame aleatorios
+            db.aleatorios.insert_one(
+                {
+                    "valor": num,
+                    "fecha": fecha_busqueda,
+                    "hora": hora_busqueda
+                }
+            )
+            # Guardamos tambien en la BBDD externa, en el canal numeros y cada variable en su recurso
+            bbt.write("numeros", "valor", num)
+            bbt.write("numeros", "fecha", fecha_busqueda)
+            bbt.write("numeros", "hora", hora_busqueda)
+
+            if num > umbral_actual:
+                umbral_superado = True
+                print "hola"
+            else:
+                umbral_superado = False
+
+            return render_template('umbral_actual.html', umbral_superado=umbral_superado, valor=num,
+                            fecha=fecha_busqueda, hora=hora_busqueda)

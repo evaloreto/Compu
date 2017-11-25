@@ -41,7 +41,7 @@ def result():
             )
 
             # Inicializamos valormedio, para que no de error en caso de que no se use
-            valormedio = -1
+            valormedio = -1.0
 
             if request.method == "GET":
                 query = db.aleatorios.find()
@@ -81,3 +81,5 @@ def result():
             #    print document['fecha']
 
         return render_template('results.html', query=query, valormedio=valormedio)
+
+    

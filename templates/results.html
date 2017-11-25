@@ -52,23 +52,34 @@
 </tbody>
 </table>
 
+
+
+	{% if valormedio != -1 %}
+		<table align="center" style="margin-top: 15px; margin-bottom: 15px;">
+			<tr></tr>
+			<tr>
+				<th style="text-align: center;"> Valor medio = &nbsp;</th>
+				<td style="text-align: center;"> {{ valormedio }} </td>
+			</tr>
+			<tr></tr>
+		</table>
+	{% endif %}
+
+
 <table class="table table-striped">
 	<thead>
-		{% if valormedio != -1 %}
-			<tr colspan="3" align="center"> Valor medio = {{ valormedio }}</tr>
-		{% endif %}
 	<tr>
-		<th>Valor</th>
-		<th>Fecha</th>
-		<th>Hora</th>
+		<th style="text-align: center;">Valor</th>
+		<th style="text-align: center;">Fecha</th>
+		<th style="text-align: center;">Hora</th>
 	</tr>
 	</thead>
 	<tbody>
 		{% for value in query %}
 			<tr>
-				<td> {{ value['valor'] }} </td>
-				<td> {{ value['fecha'] }} </td>
-				<td> {{ value['hora'] }} </td>
+				<td style="text-align: center;"> {{ value['valor'] }} </td>
+				<td style="text-align: center;"> {{ value['fecha'] }} </td>
+				<td style="text-align: center;"> {{ value['hora'] }} </td>
 			</tr>
 		{% endfor %}
 	</tbody>

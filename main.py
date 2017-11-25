@@ -72,14 +72,8 @@ def result():
                         valormedio = valormedio / total_valores
                     else:
                         query = db.aleatorios.find({'valor': {'$gt': umbral}})
-                    #for document in query:
-                    #    print document['valor']
 
-            #for document in query:
-            #   print document['valor']
-            #    print document['hora']
-            #    print document['fecha']
+        return render_template('result.html', query=query, valormedio=valormedio)
 
-        return render_template('results.html', query=query, valormedio=valormedio)
-
-    
+#@app.route('/borrar', methods=['GET'])
+#def borrar():

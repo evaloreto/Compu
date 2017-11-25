@@ -40,10 +40,12 @@ def result():
                 }
             )
 
+            # Inicializamos valormedio, para que no de error en caso de que no se use
+            valormedio = -1
+
             if request.method == "GET":
                 query = db.aleatorios.find()
             elif request.method == "POST":
-                valormedio = -1
                 calc_valormedio = request.form.get('valormedio', default=False, type=bool)
                 umbral = request.form.get('umbral', default=-1, type=int)
                 if umbral == -1:

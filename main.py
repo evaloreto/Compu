@@ -187,3 +187,4 @@ def umbral_actual():
 
             return render_template('umbral_actual.html', umbral_superado=umbral_superado, valor=num,
                             fecha=fecha_busqueda, hora=hora_busqueda)
+

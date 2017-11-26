@@ -181,7 +181,6 @@ def umbral_actual():
 
             if num > umbral_actual:
                 umbral_superado = True
-                print "hola"
             else:
                 umbral_superado = False
 

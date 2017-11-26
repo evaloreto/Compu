@@ -20,7 +20,7 @@ def main():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     global leer_bbdd_interna
-    locale.setlocale(locale.LC_TIME, 'es_ES')
+    locale.setlocale(locale.LC_TIME, 'en_GB.utf8')
 
     # Conexion con BBDD interna
     # Por defecto la base de datos de mongo usa el puerto 27017
@@ -135,7 +135,7 @@ def graficas_externas():
 def umbral_actual():
     global umbral_actual
 
-    locale.setlocale(locale.LC_TIME, 'es_ES')
+    locale.setlocale(locale.LC_TIME, 'en_GB.utf8')
 
     # Conexion con BBDD interna
     # Por defecto la base de datos de mongo usa el puerto 27017

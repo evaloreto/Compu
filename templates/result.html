@@ -9,7 +9,7 @@
   	var int = self.setInterval ("refresh()", 120000);
 	function refresh ()
 	{
- 		location.reload(true);
+ 		document.getElementById('obtener').submit();
 	}
   </script>
 </head>
@@ -28,7 +28,7 @@
 	<td colspan="3">&nbsp;</td>
 </tr>
 <tr>
-<td style="text-align: center;" colspan="3"><form action="/result"><input class="btn btn-success" type="submit" value="Obtener n&uacute;meros aleatorios" /></form></td>
+<td style="text-align: center;" colspan="3"><form action="/result" id="obtener"><input class="btn btn-success" type="submit" value="Obtener n&uacute;meros aleatorios" /></form></td>
 </tr>
 <tr>
 	<td colspan="3">&nbsp;</td>

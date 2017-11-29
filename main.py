@@ -68,7 +68,6 @@ def result():
         umbral = request.form.get('umbral', default=-1, type=int)
         umbral_aux = request.form.get('umbral_aux', default=-1, type=int)
         tipo_umbral = request.form.get('tipo_umbral', default=-1, type=int)
-        print tipo_umbral
         if umbral == -1:
             query = list(db.aleatorios.find())
             if calc_valormedio:
@@ -95,8 +94,6 @@ def result():
                 query = list(db.aleatorios.find({'valor': {'$lt': umbral}}))
             elif tipo_umbral == 2:
                 query = list(db.aleatorios.find({'valor': {'$lt': umbral, '$gt': umbral_aux}}))
-                for document in query:
-                    print document['valor']
             if calc_valormedio:
                 total_valores = 0
                 valormedio = 0.0
